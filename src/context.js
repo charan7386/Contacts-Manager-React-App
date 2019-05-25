@@ -1,12 +1,56 @@
-// import React, {Component} from 'react';
+import React, {Component} from 'react';
 
-// const Context = React.createContext();
+const Context = React.createContext();
 
-// export class Provider extends Component{
+const reducer = (state, action) => {
+	switch(action.type){
+		case 'DELETE_CONTACT':
+			return {
+				...state,
+				contacts: state.contacts.filter(contact => contact.id !== action.payload)
+			};
 
-	
+		default:
+			return state;
+	}
+}
 
-// 	render(){
-// 		<
-// 	};
-// }
+export class Provider extends Component{
+
+	state = {
+		contacts: [
+			{
+				id: 1,
+				name: 'John Doe',
+				email: 'jdoe@gmail.com',
+				phone: '8985616407'
+			},
+			{
+				id: 2,
+				name: 'Charan',
+				email: 'charan@gmail.com',
+				phone: '8985893407'
+			},
+			{
+				id: 3,
+				name: 'Test',
+				email: 'test@gmail.com',
+				phone: '8988893407'
+			}
+		],
+		dispatch: action => {
+			this.setState(state => reducer(state, action));
+		}
+	};	
+
+	render(){
+		
+		return(
+			<Context.Provider value={this.state}>
+				{this.props.children}
+			</Context.Provider>
+		)
+	};
+}
+
+export const Consumer = Context.Consumer;
