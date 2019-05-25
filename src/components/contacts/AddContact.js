@@ -4,13 +4,6 @@ import uuid from 'uuid';
 import TextInputGroup from './../layout/TextInputGroup';
 
 class AddContact extends React.Component {
-	// static propTypes = {
-	// 	name: React.PropTypes.string,
-	// };
-
-	// constructor(props) {
-	// 	super(props);
-	// }
 
 	state = {
 		name: '',
@@ -72,7 +65,7 @@ class AddContact extends React.Component {
 									<TextInputGroup label="Email" name="email" type="email" placeholder="Enter Email" value={email} onChange={this.onChange} error={errors.email}/>
 									<TextInputGroup label="Phone" name="phone" type="phone" placeholder="Enter Phone" value={phone} onChange={this.onChange} error={errors.phone}/>
 									<div className="invalid-feedback">This is </div>
-									<input type="submit" value='Add Contact' className='btn btn-light btn-block'/>
+									<input type="submit" value='Add Contact' className='btn btn-info btn-block'/>
 								</form>
 							</div>
 						</div>
