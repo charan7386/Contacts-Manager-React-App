@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {Consumer} from './../context';
+import {Consumer} from './../../context';
 
 class Contact extends Component{
 
@@ -26,8 +26,8 @@ class Contact extends Component{
                             <h4>
                                 {name} 
                                 <i 
-                                    style = {{ cursor: 'pointer', marginLeft: 10}}
-                                    className="fa fa-sort-down" 
+                                    style = {{ cursor: 'pointer'}}
+                                    className="fa fa-sort-down ml-2" 
                                     onClick = { ()=> this.setState({ showContactInfo: !this.state.showContactInfo})}>
                                 </i>
                                 <i 
