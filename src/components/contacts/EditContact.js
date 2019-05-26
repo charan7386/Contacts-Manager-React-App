@@ -3,7 +3,7 @@ import {Consumer} from './../../context';
 import TextInputGroup from './../layout/TextInputGroup';
 import axios from 'axios';
 
-class AddContact extends React.Component {
+class EditContact extends React.Component {
 
 	state = {
 		name: '',
@@ -11,6 +11,16 @@ class AddContact extends React.Component {
 		phone: '',
 		errors: {},
 	};
+
+	async componentDidMount(){
+		const {id} = this.props.match.params;
+		const res = await axios.get(`http://jsonplaceholder.typicode.com/users/${id}`);
+		this.setState({
+			name: res.data.name,
+			email: res.data.email,
+			phone: res.data.phone,
+		});
+	}
 
 	onSubmit = async (dispatch, event) => {
 		event.preventDefault();
@@ -32,15 +42,6 @@ class AddContact extends React.Component {
 	      return;
 	    }
 
-		const newContact ={
-			name,
-			email,
-			phone
-		};
-
-		const res = await axios.post('http://jsonplaceholder.typicode.com/users', newContact);
-		dispatch({type:'ADD_CONTACT', payload:res.data});
-
 		//Clear State
 		this.setState({
 			name: '',
@@ -48,6 +49,16 @@ class AddContact extends React.Component {
 			phone: '',
 			errors: {},
 		});
+
+		const updatedContact ={
+			name,
+			email,
+			phone
+		};
+
+		const {id} = this.props.match.params;
+		const res = await axios.put(`http://jsonplaceholder.typicode.com/users/${id}`, updatedContact);
+		dispatch({type: 'UPDATE_CONTACT', payload:res.data});
 
 		this.props.history.push('/');
 	};
@@ -63,14 +74,14 @@ class AddContact extends React.Component {
 					const {dispatch} = value;
 					return(
 						<div className='card mb-3'>
-							<div className='card-header'> Add Contact </div>
+							<div className='card-header'> Edit Contact </div>
 							<div className='card-body'>
 								<form onSubmit={this.onSubmit.bind(this, dispatch)}>
 									<TextInputGroup label="Name" name="name" type="text" placeholder="Enter Name" value={name} onChange={this.onChange} error={errors.name}/>
 									<TextInputGroup label="Email" name="email" type="email" placeholder="Enter Email" value={email} onChange={this.onChange} error={errors.email}/>
 									<TextInputGroup label="Phone" name="phone" type="phone" placeholder="Enter Phone" value={phone} onChange={this.onChange} error={errors.phone}/>
 									<div className="invalid-feedback">This is </div>
-									<input type="submit" value='Add Contact' className='btn btn-info btn-block'/>
+									<input type="submit" value='Update Contact' className='btn btn-info btn-block'/>
 								</form>
 							</div>
 						</div>
@@ -78,11 +89,7 @@ class AddContact extends React.Component {
 				}
 			}</Consumer>
 		);
-
-		// return (
-			
-		// );
 	}
 };
 
-export default AddContact;
+export default EditContact;
