@@ -17,7 +17,7 @@ class TextInputGroup extends React.Component {
 		const {label, name, type, placeholder, value, onChange, error} = this.props;
 		return (
 			<div className='form-group'>
-				<label htmlFor={name}>Name</label>
+				<label htmlFor={name}>{label}</label>
 				<input type={type} name={name} className={classnames('form-control form-control-lg', {'is-invalid': error})} placeholder={placeholder} value={value} onChange={onChange} />
 				{error && <div className="invalid-feedback">{error}</div>}
 			</div>
